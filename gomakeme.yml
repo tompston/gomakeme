@@ -1,0 +1,8 @@
+project_info:
+  # do not delete any of the lower lines
+  go_version: 1.16
+  name: "change_me"
+  port: 5000
+# Modules should be Title case + singular
+# If you don't need modules, comment out the lower line
+modules: [User, Task]
