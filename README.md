@@ -2,6 +2,8 @@
 
 ## Generate boilerplate + endpoints for Fiber REST APIs.
 
+> Never spend 6 minutes doing something by hand when you can spend 1 week to automate it
+
 Currently there are two options for the project that you could generate:
 
 1. Minimal setup with no endpoints
