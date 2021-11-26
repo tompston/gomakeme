@@ -20,11 +20,16 @@ modules: [User, Task]
 
 The `user_module` will be created in the `modules` directory.
 
-A single module will hold 5 basic CRUD endpoints, that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated with the controller.
+### Module 
+
+A single module will hold 5 basic CRUD endpoints, that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated it. The controllers can also hold common functions, such as 
+- validation of url params, if there are any 
+- validation and custom error messages for the sent payloads
+- database connection ( if set to true in the config file )
 
 Once the directory for the `user_module` is created, it won't be updated if you run the `go generate` again, so you can edit them.
 
-## How to generate a server
+## How to generate a new REST API
 
 1. Clone the repo
 
@@ -32,7 +37,13 @@ Once the directory for the `user_module` is created, it won't be updated if you 
 
 3. Run `go generate`
 
-4. cd into the project and run `go mod tidy` + change the .env vars
+4. cd into the project and run 
+
+```bash
+go mod tidy
+go mod download
+# + change the .env vars
+```
 
 5. run the server with `go run main.go`
 
