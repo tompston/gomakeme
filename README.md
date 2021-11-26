@@ -22,7 +22,7 @@ The `user_module` will be created in the `modules` directory.
 
 ### Module 
 
-A single module will hold 5 basic CRUD endpoints, that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated it. The controllers can also hold common functions, such as 
+A single module will hold 5 basic CRUD endpoints, that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated with it. The controllers can also hold common functions, such as 
 - validation of url params, if there are any 
 - validation and custom error messages for the sent payloads
 - database connection ( if set to true in the config file )
