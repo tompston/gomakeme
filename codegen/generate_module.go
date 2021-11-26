@@ -3,18 +3,10 @@ package codegen
 import (
 	"fmt"
 	"gomakeme/input"
-	"strings"
-	"text/template"
 )
 
 // name of the folder in the project to which the new modules will be created
 var ModuleOutputDir = "modules"
-
-// this variable holds all of the functions that will be passed down to the templates.
-var temp_funcs = template.FuncMap{
-	"convertToTitle":     strings.Title,
-	"convertToLowercase": strings.ToLower,
-}
 
 // generate the dir inside the project that will hold the files for the module
 func GenerateModuleDir(g Project) {
@@ -47,11 +39,21 @@ func GenerateNewModule(g Project, template_path string) {
 	if !PathExists(m_path_relative) {
 		// create the dir that will hold the files for the module
 		GenerateModuleDir(g)
-		// create the files inside the new dir
-		GenerateModuleFile(g, "codegen/templates/init_module/controller.go.tpl")
+		//  --- Maybe turn this into a for loop. Maybe.
 		GenerateModuleFile(g, "codegen/templates/init_module/router.go.tpl")
+		GenerateModuleFile(g, "codegen/templates/init_module/get.go.tpl")
+		GenerateModuleFile(g, "codegen/templates/init_module/delete.go.tpl")
+		GenerateModuleFile(g, "codegen/templates/init_module/post.go.tpl")
+		GenerateModuleFile(g, "codegen/templates/init_module/put.go.tpl")
+		// message
 		fmt.Println("* Created module", m_name)
 	}
+	// else {
+	// 	// fmt.Println("* Created module", m_name)
+	// 	// everything below is commented out while not testing
+	// 	// GenerateModuleFile(g, "codegen/templates/init_module/controller.go.tpl")
+	// 	// GenerateModuleFile(g, "codegen/templates/init_module/router.go.tpl")
+	// }
 }
 
 // Passing down the Project struct from the input package that is populated with the values from the yml file.

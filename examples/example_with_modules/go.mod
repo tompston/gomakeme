@@ -1,9 +1,6 @@
-{{ $project_name := .ProjectInfo.ProjectName -}}
-{{ $go_version := .ProjectInfo.GoVersion -}}
+module example_with_modules
 
-module {{$project_name}}
-
-go {{ $go_version }}
+go 1.16
 
 require (
 	github.com/andybalholm/brotli v1.0.3 // indirect

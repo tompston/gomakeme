@@ -7,6 +7,14 @@ import (
 	"strings"
 )
 
+func ConvertToLowecase(input string) string {
+	return strings.ToLower(input)
+}
+
+func ConvertToLowercasePlural(input string) string {
+	return fmt.Sprintf("%s%s", strings.ToLower(input), "s")
+}
+
 // if you pass a nested path of folders that do not exist, this function will also create those folders
 func CreateFolder(p string) (*os.File, error) {
 	if err := os.MkdirAll(filepath.Dir(p), 0770); err != nil {

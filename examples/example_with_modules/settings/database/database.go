@@ -1,5 +1,3 @@
-{{ $project_name := .ProjectInfo.ProjectName -}}
-
 package database
 
 import (
@@ -7,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"{{$project_name}}/settings"
+	"example_with_modules/settings"
 
 	_ "github.com/lib/pq"
 )

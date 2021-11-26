@@ -11,6 +11,7 @@ var init_project_dirs = [...]string{
 	"/",
 	"/settings/database/",
 	"/utils/response/",
+	"/utils/validate/",
 	"/router/",
 }
 
@@ -23,6 +24,8 @@ var init_project_templates = [...]string{
 	"settings/settings.go.tpl",
 	"settings/database/database.go.tpl",
 	"utils/response/response.go.tpl",
+	"utils/response/messages.go.tpl",
+	"utils/validate/validate.go.tpl",
 	"router/router.go.tpl",
 }
 
@@ -55,7 +58,7 @@ func GenerateInitFileBatch(global_project_data input.Project) {
 func UpdateModuleImporter(g input.Project) {
 
 	proj_name := g.ProjectInfo.ProjectName
-	temp_path := "router/project_modules.go.tpl"
+	temp_path := "router/module_importer.go.tpl"
 	temp_name, output_path := GenerateTemplateNameAndOutput(temp_path, true)
 	full_output_path := fmt.Sprintf("%s/%s", proj_name, output_path)
 	full_template_path := fmt.Sprintf("%s%s", init_project_template_path, temp_path)
@@ -78,5 +81,8 @@ func GenerateInitProject(global_project_data input.Project) {
 		GenerateInitFileBatch(global_project_data)
 	} else {
 		fmt.Println("Project already exists!")
+		// everything below is commented out while not testing
+		// GenerateInitProjectDirs(p_name)
+		// GenerateInitFileBatch(global_project_data)
 	}
 }

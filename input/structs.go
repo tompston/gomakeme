@@ -7,9 +7,10 @@ type Project struct {
 }
 
 type ProjectInfo struct {
-	ProjectName string `yaml:"name"`
-	Port        string `yaml:"port"`
-	GoVersion   string `yaml:"go_version"`
+	ProjectName      string `yaml:"name"`
+	Port             string `yaml:"port"`
+	GoVersion        string `yaml:"go_version"`
+	IncludeDbSnippet string `yaml:"include_db_snippet"`
 }
 
 type ProjectConfig struct {

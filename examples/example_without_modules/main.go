@@ -1,10 +1,8 @@
-{{ $project_name := .ProjectInfo.ProjectName -}}
-
 package main
 
 import (
-	"{{$project_name}}/router"
-	"{{$project_name}}/settings"
+	"example_without_modules/router"
+	"example_without_modules/settings"
 	"fmt"
 	"strconv"
 

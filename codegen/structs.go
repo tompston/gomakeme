@@ -18,9 +18,10 @@ type Module struct {
 //  will be used in the go.mod, as the name of the folder in which your project will be
 // 	and as the first part of imports for other modules
 type ProjectInfo struct {
-	ProjectName string
-	Port        string `yaml:"port"`
-	GoVersion   string `yaml:"go_version"`
+	ProjectName      string
+	Port             string `yaml:"port"`
+	GoVersion        string `yaml:"go_version"`
+	IncludeDbSnippet string `yaml:"include_db_snippet"`
 }
 
 // struct that will be used in the .env template.

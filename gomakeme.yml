@@ -1,8 +1,17 @@
 project_info:
-  # do not delete any of the lower lines
   go_version: 1.16
   name: "change_me"
   port: 5000
-# Modules should be Title case + singular
-# If you don't need modules, comment out the lower line
-modules: [User, Task]
+  include_db_snippet : true
+modules: [User, Post]
+
+# --- RULES / GUIDELINES --- 
+# 
+#   - do not delete any of the lines !!!
+# 
+#   - Modules should be Title case + singular
+#       If you don't need modules, comment out that line
+# 
+#   - include_db_snippet
+#       if true, the controllers will hold the function 
+#       that creates a db connection 
