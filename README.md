@@ -42,17 +42,18 @@ Once the directory for the `user_module` is created, it won't be updated if you 
 ```bash
 go mod tidy
 go mod download
+go run main.go
 # + change the .env vars
 ```
-
-5. run the server with `go run main.go`
 
 ## Notes
 
 - Why Fiber? Because it's one of the [fastest](https://www.techempower.com/benchmarks/) Go frameworks currently + takes inspiration from Express
 
-- Taking a bit of inspiration from Nest.js and to keep the global state management simple, we bundle all of the logic of a single module ( router + controllers ) into one package.
+- The project does not include any ORMs currently, as there are too many options to choose from
 
-- Only the `router/project_modules.go` file will be updated on the next `go generate` runs. All of the other files won't be touched.
+- Taking a bit of inspiration from Nest.js and to keep the global state management simple, we bundle all of the logic of a single module ( router + controllers ) into one package
 
-- There are probably bugs.
+- Only the `router/project_modules.go` file will be updated on the next `go generate` runs. All of the other files won't be touched
+
+- There are probably bugs
