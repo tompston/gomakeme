@@ -15,15 +15,17 @@ func GenerateInitProjectDirs(project_name string) {
 // loop over "init_project_templates" and create the output files
 // when generatin the init project, we pass down the struct that we defined in the
 // input, as we need access to all of the defined modules that are mentioned in the array
-func GenerateInitFileBatch(global_project_data input.Project) {
+func GenerateInitFileBatch(g input.Project) {
 
 	for i := 0; i < len(init_project_templates); i++ {
-		proj_name := global_project_data.ProjectInfo.ProjectName
+
+		proj_name := g.ProjectInfo.ProjectName
 		temp_path := init_project_templates[i]
 		temp_name, output_path := GenerateTemplateNameAndOutput(temp_path, true)
 		full_output_path := fmt.Sprintf("%s/%s", proj_name, output_path)
 		full_template_path := fmt.Sprintf("%s%s", init_project_template_path, temp_path)
-		ExecuteTemplate(temp_name, full_template_path, temp_funcs, full_output_path, global_project_data)
+
+		ExecuteTemplate(temp_name, full_template_path, temp_funcs, full_output_path, g)
 		fmt.Println("Created ", output_path)
 	}
 }
@@ -38,6 +40,7 @@ func UpdateModuleImporter(g input.Project) {
 	temp_name, output_path := GenerateTemplateNameAndOutput(temp_path, true)
 	full_output_path := fmt.Sprintf("%s/%s", proj_name, output_path)
 	full_template_path := fmt.Sprintf("%s%s", init_project_template_path, temp_path)
+
 	ExecuteTemplate(temp_name, full_template_path, temp_funcs, full_output_path, g)
 	fmt.Println("Updated ", output_path)
 }

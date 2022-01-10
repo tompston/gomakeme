@@ -10,9 +10,7 @@ var ModuleOutputDir = "modules"
 
 // generate the dir inside the project that will hold the files for the module
 func GenerateModuleDir(g Project) {
-	p_name := g.ProjectInfo.ProjectName
-	m_name := g.Module.ModuleName
-	CreateFolder(ModuleDir(p_name, m_name))
+	CreateFolder(ModuleDir(g.ProjectInfo.ProjectName, g.Module.ModuleName))
 }
 
 // you can't pass down the Project struct from input package due to the fact that
@@ -20,6 +18,7 @@ func GenerateModuleDir(g Project) {
 // as it's an array. To avoid passing down an array that would break the templates, we assign
 // the value of the array to the Project struct that is defined in the current package.
 func GenerateModuleFile(g Project, template_path string) {
+
 	p_name := g.ProjectInfo.ProjectName
 	m_name := g.Module.ModuleName
 	o_path := ModuleDir(p_name, m_name)
@@ -59,7 +58,7 @@ func GenerateModulesFromConfig(conf *input.Project) {
 
 	// if the Modules array is not empty, generate them
 	if len(conf.Modules) != 0 {
-		// fmt.Println("Generating Modules!")
+		fmt.Println("Generating Modules!")
 		for i := 0; i < len(conf.Modules); i++ {
 
 			yaml_data := Project{
