@@ -24,6 +24,7 @@ func GenerateModuleFile(g Project, template_path string) {
 	m_name := g.Module.ModuleName
 	o_path := ModuleDir(p_name, m_name)
 	template_name, output_file := GenerateTemplateNameAndOutput(template_path, false)
+
 	full_output_path := fmt.Sprintf("%s%s", o_path, output_file)
 	ExecuteTemplate(template_name, template_path, temp_funcs, full_output_path, g)
 }
@@ -35,25 +36,19 @@ func GenerateNewModule(g Project, template_path string) {
 	m_name := g.Module.ModuleName
 	m_path := ModuleDir(p_name, m_name)
 	m_path_relative := fmt.Sprintf("./%s", m_path)
-	// if the module mentioned in the config does not exist, create it
-	if !PathExists(m_path_relative) {
+
+	// if the module mentioned in the config does not exist or debug_mode, create it
+	if !PathExists(m_path_relative) || debug_mode {
 		// create the dir that will hold the files for the module
 		GenerateModuleDir(g)
-		//  --- Maybe turn this into a for loop. Maybe.
-		GenerateModuleFile(g, "codegen/templates/init_module/router.go.tpl")
-		GenerateModuleFile(g, "codegen/templates/init_module/get.go.tpl")
-		GenerateModuleFile(g, "codegen/templates/init_module/delete.go.tpl")
-		GenerateModuleFile(g, "codegen/templates/init_module/post.go.tpl")
-		GenerateModuleFile(g, "codegen/templates/init_module/put.go.tpl")
-		// message
+
+		// create the files inside the dir
+		for i := 0; i < len(module_files); i++ {
+			GenerateModuleFile(g, module_files[i])
+		}
+
 		fmt.Println("* Created module", m_name)
 	}
-	// else {
-	// 	// fmt.Println("* Created module", m_name)
-	// 	// everything below is commented out while not testing
-	// 	// GenerateModuleFile(g, "codegen/templates/init_module/controller.go.tpl")
-	// 	// GenerateModuleFile(g, "codegen/templates/init_module/router.go.tpl")
-	// }
 }
 
 // Passing down the Project struct from the input package that is populated with the values from the yml file.

@@ -2,16 +2,16 @@ project_info:
   go_version: 1.16
   name: "change_me"
   port: 5000
-  include_db_snippet : true
-modules: [User, Post]
+  include_db_snippet: true
+modules: [User, Post, Comment]
 
-# --- RULES / GUIDELINES --- 
-# 
+# --- RULES / GUIDELINES ---
+#
 #   - do not delete any of the lines !!!
-# 
+#
 #   - Modules should be Title case + singular
 #       If you don't need modules, comment out that line
-# 
+#
 #   - include_db_snippet
-#       if true, the controllers will hold the function 
-#       that creates a db connection 
+#       if true, the controllers will hold the function
+#       that creates a db connection

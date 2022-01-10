@@ -9,6 +9,8 @@ import (
 	"text/template"
 )
 
+var debug_mode = false
+
 func ExecuteTemplate(t_name string, t_path string, t_funcs template.FuncMap, full_output_path string, data interface{}) {
 
 	tmpl, err := template.New(t_name).Funcs(t_funcs).ParseFiles(t_path)

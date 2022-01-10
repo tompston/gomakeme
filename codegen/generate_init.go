@@ -5,30 +5,6 @@ import (
 	"gomakeme/input"
 )
 
-var init_project_template_path = "codegen/templates/init_server/"
-
-var init_project_dirs = [...]string{
-	"/",
-	"/settings/database/",
-	"/utils/response/",
-	"/utils/validate/",
-	"/router/",
-}
-
-var init_project_templates = [...]string{
-	"main.go.tpl",
-	".env.tpl",
-	"README.md.tpl",
-	"go.mod.tpl",
-	"Dockerfile.tpl",
-	"settings/settings.go.tpl",
-	"settings/database/database.go.tpl",
-	"utils/response/response.go.tpl",
-	"utils/response/messages.go.tpl",
-	"utils/validate/validate.go.tpl",
-	"router/router.go.tpl",
-}
-
 // loop over dirs specified in the  "init_project_dirs" to create them
 func GenerateInitProjectDirs(project_name string) {
 	for i := 0; i < len(init_project_dirs); i++ {
@@ -68,21 +44,17 @@ func UpdateModuleImporter(g input.Project) {
 
 // this function will create the empty init folders and then populate them with the templates that
 // you created inside the init_server dir.
-// Just like in modules, add a check that will validate if the project exists to run this func.
 func GenerateInitProject(global_project_data input.Project) {
 
 	p_name := global_project_data.ProjectInfo.ProjectName
 	p_path := fmt.Sprintf("./%s", p_name)
 
-	// if the provided project name dir already exists, do not update
-	// the init dirs.
-	if !PathExists(p_path) {
+	// if the provided project name dir already exists or debug_mode is true, do not update the init dirs.
+	if !PathExists(p_path) || debug_mode {
 		GenerateInitProjectDirs(p_name)
 		GenerateInitFileBatch(global_project_data)
 	} else {
 		fmt.Println("Project already exists!")
-		// everything below is commented out while not testing
-		// GenerateInitProjectDirs(p_name)
-		// GenerateInitFileBatch(global_project_data)
 	}
+
 }
