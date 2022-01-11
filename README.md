@@ -74,4 +74,5 @@ GOOS=linux GOARCH=amd64 go build -o ./gomakeme_linux_amd64
 
 GOOS=windows go build -o ./bin/gomakeme_win
 
+// qwe
 -->
