@@ -6,19 +6,21 @@
 
 ## Install
 
-- go version >= 1.17
+- Go
 
-```
+```bash
+# go version >= 1.17
 go install github.com/tompston/gomakeme@latest
-```
 
-- go version < 1.17
-
-```
+# go version < 1.17
 go get github.com/tompston/gomakeme
 ```
 
-- Or clone the repo
+- Or clone
+
+```bash
+git clone https://github.com/tompston/gomakeme.git
+```
 
 ## Generate the REST API
 
