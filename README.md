@@ -4,6 +4,37 @@
 
 > Never spend 6 minutes doing something by hand when you can spend 1 week to automate it
 
+## Install
+
+- go version >= 1.17
+
+```
+go install github.com/tompston/gomakeme@latest
+```
+
+- go version < 1.17
+
+```
+go get github.com/tompston/gomakeme
+```
+
+- Or clone the repo
+
+## Generate the REST API
+
+1. Create the `gomakeme.yml` config file, copy example settings from this repo and update values
+2. run `gomakeme` in the directory which holds the yaml config
+3. cd into the created project and run
+
+```bash
+go mod tidy
+go mod download
+go run main.go
+# + change the .env vars
+```
+
+## Explanation
+
 Currently there are two options for the project that you could generate:
 
 1. Minimal setup with no endpoints
@@ -30,33 +61,12 @@ A single module will hold 5 basic CRUD endpoints, that will be automatically ava
 
 Once the directory for the `user_module` is created, it won't be updated if you run the `go generate` again, so you can edit them.
 
-## How to generate a new REST API
-
-1. Clone the repo
-
-2. Change the `gomakeme.yml` config file
-
-3. Run `go generate`
-
-4. cd into the project and run
-
-```bash
-go mod tidy
-go mod download
-go run main.go
-# + change the .env vars
-```
-
 ## Notes
 
 - Why Fiber? Because it's one of the [fastest](https://www.techempower.com/benchmarks/) Go frameworks currently + takes inspiration from Express
-
 - The project does not include any ORMs currently, as there are too many options to choose from.
-
 - Taking a bit of inspiration from Nest.js, we bundle all of the logic of a single module ( router + controllers ) into one package.
-
 - Only the `router/project_modules.go` file will be updated on the next `go generate` runs. All of the other files won't be touched
-
 - There are probably bugs
 
 <!--
@@ -64,15 +74,15 @@ go run main.go
 # wsl
 
 export PATH=$PATH:/usr/local/go/bin
+
 GOOS=linux go build -o main .
-
 GOOS=linux go build -o ./gomakeme
-
 GOOS=linux go build -o ./gomakeme_linux
-
 GOOS=linux GOARCH=amd64 go build -o ./gomakeme_linux_amd64
-
 GOOS=windows go build -o ./bin/gomakeme_win
 
-// qwe
+-- publishing
+https://go.dev/doc/modules/publishing
+
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.2
 -->
