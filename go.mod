@@ -1,4 +1,4 @@
-module gomakeme
+module github.com/tompston/gomakeme
 
 go 1.16
 

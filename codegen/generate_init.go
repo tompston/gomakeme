@@ -2,7 +2,8 @@ package codegen
 
 import (
 	"fmt"
-	"gomakeme/input"
+
+	"github.com/tompston/gomakeme/input"
 )
 
 // loop over dirs specified in the  "init_project_dirs" to create them

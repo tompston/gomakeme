@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"gomakeme/codegen"
-	"gomakeme/input"
 	"log"
+
+	"github.com/tompston/gomakeme/codegen"
+	"github.com/tompston/gomakeme/input"
 )
 
 //go:generate go run main.go

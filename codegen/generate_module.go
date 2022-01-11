@@ -2,7 +2,8 @@ package codegen
 
 import (
 	"fmt"
-	"gomakeme/input"
+
+	"github.com/tompston/gomakeme/input"
 )
 
 // name of the folder in the project to which the new modules will be added
