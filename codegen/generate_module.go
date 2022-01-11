@@ -59,7 +59,7 @@ func GenerateModulesFromConfig(conf *input.Project) {
 
 	// if the Modules array is not empty, generate them
 	if len(conf.Modules) != 0 {
-		fmt.Println("Generating Modules!")
+		// fmt.Println("Generating Modules!")
 		for i := 0; i < len(conf.Modules); i++ {
 
 			yaml_data := Project{

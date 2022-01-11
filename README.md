@@ -66,4 +66,10 @@ go run main.go
 export PATH=$PATH:/usr/local/go/bin
 GOOS=linux go build -o main .
 
+export PATH=$PATH:/usr/local/go/bin
+GOOS=linux go build -o ./gomakeme
+
+export PATH=$PATH:/usr/local/go/bin
+GOOS=linux go build -o ./gomakeme_linux
+
 -->
