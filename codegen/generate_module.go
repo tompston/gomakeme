@@ -5,7 +5,7 @@ import (
 	"gomakeme/input"
 )
 
-// name of the folder in the project to which the new modules will be created
+// name of the folder in the project to which the new modules will be added
 var ModuleOutputDir = "modules"
 
 // generate the dir inside the project that will hold the files for the module
@@ -36,8 +36,9 @@ func GenerateNewModule(g Project, template_path string) {
 	m_path := ModuleDir(p_name, m_name)
 	m_path_relative := fmt.Sprintf("./%s", m_path)
 
-	// if the module mentioned in the config does not exist or debug_mode, create it
+	// if the module mentioned in the config does not exist or debug_mode is true, create it
 	if !PathExists(m_path_relative) || debug_mode {
+
 		// create the dir that will hold the files for the module
 		GenerateModuleDir(g)
 
@@ -50,9 +51,9 @@ func GenerateNewModule(g Project, template_path string) {
 	}
 }
 
-// Passing down the Project struct from the input package that is populated with the values from the yml file.
-// For each value that you define in the modules array, create a new struct that will hold seperated
-// values so that a template would have access to one module at a time
+// Passing down the Project struct from the input package that is populated with the values from the yaml file.
+// For each value that you define in the modules array, create a new struct that will hold seperated values so
+// that a template would have access to one module at a time.
 // Once you have a struct with seperated values, create it
 func GenerateModulesFromConfig(conf *input.Project) {
 
@@ -69,6 +70,7 @@ func GenerateModulesFromConfig(conf *input.Project) {
 			}
 
 			GenerateNewModule(yaml_data, "codegen/templates/init_module/module_controller.go.tpl")
+			// GenerateNewModule(yaml_data, "templates/init_module/module_controller.go.tpl")
 		}
 	}
 }

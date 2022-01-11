@@ -12,49 +12,50 @@ func GenerateInitProjectDirs(project_name string) {
 	}
 }
 
-// loop over "init_project_templates" and create the output files
-// when generatin the init project, we pass down the struct that we defined in the
-// input, as we need access to all of the defined modules that are mentioned in the array
+// loop over "init_project_templates" and create the output files when generating
+// the init project, we pass down the struct that we defined in the input, as we
+// need access to all of the defined modules that are mentioned in the array
 func GenerateInitFileBatch(g input.Project) {
 
 	for i := 0; i < len(init_project_templates); i++ {
 
-		proj_name := g.ProjectInfo.ProjectName
-		temp_path := init_project_templates[i]
-		temp_name, output_path := GenerateTemplateNameAndOutput(temp_path, true)
-		full_output_path := fmt.Sprintf("%s/%s", proj_name, output_path)
-		full_template_path := fmt.Sprintf("%s%s", init_project_template_path, temp_path)
+		project_name := g.ProjectInfo.ProjectName
+		template_path := init_project_templates[i]
+		template_name, output_path := GenerateTemplateNameAndOutput(template_path, true)
+		full_output_path := fmt.Sprintf("%s/%s", project_name, output_path)
+		full_template_path := fmt.Sprintf("%s%s", init_project_template_path, template_path)
 
-		ExecuteTemplate(temp_name, full_template_path, temp_funcs, full_output_path, g)
+		ExecuteTemplate(template_name, full_template_path, temp_funcs, full_output_path, g)
 		fmt.Println("Created ", output_path)
 	}
 }
 
 // function that creates the file which imports the modules.
-// As we should not run the function that creates the project every time, we create a seperate func that
-// will always update the imported modules
+// As we should not run the function that creates the project every time, we create
+// a seperate function that will always update the imported modules
 func UpdateModuleImporter(g input.Project) {
 
-	proj_name := g.ProjectInfo.ProjectName
-	temp_path := "router/module_importer.go.tpl"
-	temp_name, output_path := GenerateTemplateNameAndOutput(temp_path, true)
-	full_output_path := fmt.Sprintf("%s/%s", proj_name, output_path)
-	full_template_path := fmt.Sprintf("%s%s", init_project_template_path, temp_path)
+	project_name := g.ProjectInfo.ProjectName
+	template_path := "router/module_importer.go.tpl"
+	template_name, output_path := GenerateTemplateNameAndOutput(template_path, true)
+	full_output_path := fmt.Sprintf("%s/%s", project_name, output_path)
+	full_template_path := fmt.Sprintf("%s%s", init_project_template_path, template_path)
 
-	ExecuteTemplate(temp_name, full_template_path, temp_funcs, full_output_path, g)
+	ExecuteTemplate(template_name, full_template_path, temp_funcs, full_output_path, g)
 	fmt.Println("Updated ", output_path)
 }
 
-// this function will create the empty init folders and then populate them with the templates that
+// create the empty init folders and then populate them with the templates that
 // you created inside the init_server dir.
 func GenerateInitProject(global_project_data input.Project) {
 
-	p_name := global_project_data.ProjectInfo.ProjectName
-	p_path := fmt.Sprintf("./%s", p_name)
+	project_name := global_project_data.ProjectInfo.ProjectName
+	project_path := fmt.Sprintf("./%s", project_name)
 
-	// if the provided project name dir already exists or debug_mode is true, do not update the init dirs.
-	if !PathExists(p_path) || debug_mode {
-		GenerateInitProjectDirs(p_name)
+	// if the provided project name dir already exists or debug_mode is true, do
+	// not update the init dirs.
+	if !PathExists(project_path) || debug_mode {
+		GenerateInitProjectDirs(project_name)
 		GenerateInitFileBatch(global_project_data)
 	} else {
 		fmt.Println("Project already exists!")

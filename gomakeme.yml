@@ -1,6 +1,6 @@
 project_info:
   go_version: 1.16
-  name: "change_me"
+  name: "change_my_name"
   port: 5000
   include_db_snippet: true
 modules: [User, Post, Comment]
