@@ -37,6 +37,16 @@ go run main.go
 
 ## Explanation
 
+It seems like one of the boring / repetitive parts of writing basic REST APIs is the boilerpate for the endpoints. 
+
+Want to add a new table to the database and create endpoints for it? Before starting to do so, you need to write the new routes and controllers that deal with the common CRUD opetations.
+
+Want to add another table? Repat the same process again, but change only the name to the new table. 
+
+So this stuff is boring and manual. That's why you can automate it.
+
+----
+
 Currently there are two options for the project that you could generate:
 
 1. Minimal setup with no endpoints
@@ -61,14 +71,14 @@ A single module will hold 5 basic CRUD endpoints, that will be automatically ava
 - validation and custom error messages for the sent payloads
 - database connection ( if set to true in the config file )
 
-Once the directory for the `user_module` is created, it won't be updated if you run the `go generate` again, so you can edit them.
+Once the directory for the `user_module` is created, it won't be updated if you run the `gomakeme` again, so you can edit them.
 
 ## Notes
 
 - Why Fiber? Because it's one of the [fastest](https://www.techempower.com/benchmarks/) Go frameworks currently + takes inspiration from Express
-- The project does not include any ORMs currently, as there are too many options to choose from.
+- The project does not include any ORMs, as there are too many options to choose from.
 - Taking a bit of inspiration from Nest.js, we bundle all of the logic of a single module ( router + controllers ) into one package.
-- Only the `router/project_modules.go` file will be updated on the next `go generate` runs. All of the other files won't be touched
+- Only the `router/project_modules.go` file will be updated on the next `gomakeme` runs. All of the other files won't be touched
 - There are probably bugs
 
 <!--
