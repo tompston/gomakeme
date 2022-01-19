@@ -124,7 +124,7 @@ func DbConnSnippet() string {
 	// get db connection
 	db, err := database.GetDbConn()
 	if err != nil {
-		return response.ResponseError(c, nil, err.Error())
+		return res.ResponseError(c, nil, err.Error())
 	}
 	defer db.Close()
 	_ = db`
@@ -136,7 +136,7 @@ func ValidateUrlParam() string {
 	// validate url param
 	id, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
-		return response.ResponseError(c, nil, response.ParamIsNotIntMessage)
+		return res.ResponseError(c, nil, res.ParamIsNotIntMessage)
 	}
 	_ = id`
 }
@@ -147,6 +147,6 @@ func ValidatePayload() string {
 	// validate the sent json object
 	payload := new(ExampleStruct) // define which struct you want to get
 	if err := validate.ValidatePayload(c, payload); err != nil {
-		return response.ResponseError(c, nil, err.Error())
+		return res.ResponseError(c, nil, err.Error())
 	}`
 }

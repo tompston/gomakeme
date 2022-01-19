@@ -11,7 +11,7 @@
 package {{$lc}}_module
 
 import (
-	"{{$project_name}}/utils/response"
+	res "{{$project_name}}/utils/response"
 
 	"github.com/gofiber/fiber/v2"
 	"strconv" 
@@ -28,5 +28,7 @@ func {{$controller_delete}}(c *fiber.Ctx) error {
 	{{ db_conn_snippet }}
 	{{- end }}
 
-	return response.ResponseSuccess(c, data, response.DeletedMessage(module_name))
+	// query goes here
+
+	return res.ResponseSuccess(c, data, res.DeletedMessage(module_name))
 }

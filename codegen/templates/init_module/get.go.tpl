@@ -11,7 +11,7 @@
 package {{$lc}}_module
 
 import (
-	"{{$project_name}}/utils/response"
+	res "{{$project_name}}/utils/response"
 
 	"github.com/gofiber/fiber/v2"
 	"strconv"
@@ -26,7 +26,9 @@ func {{$controller_get_all}}(c *fiber.Ctx) error {
 	{{ db_conn_snippet }}
 	{{- end }}
 
-	return response.ResponseSuccess(c, data, response.FoundManyMessage(module_name))
+	// query goes here
+
+	return res.ResponseSuccess(c, data, res.FoundManyMessage(module_name))
 }
 
 func {{$controller_get_single}}(c *fiber.Ctx) error {
@@ -37,5 +39,7 @@ func {{$controller_get_single}}(c *fiber.Ctx) error {
 	{{ db_conn_snippet }}
 	{{- end }}
 
-	return response.ResponseSuccess(c, data, response.FoundOneMessage(module_name))
+	// query goes here
+
+	return res.ResponseSuccess(c, data, res.FoundOneMessage(module_name))
 }

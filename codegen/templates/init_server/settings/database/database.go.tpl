@@ -12,7 +12,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// a function that returns the dsn string
+// create the dsn string from variables that are specified in the .env file
 func DsnString() string {
 	// load all the env variables
 	settings.LoadEnvFile()
@@ -30,7 +30,7 @@ func DsnString() string {
 	return dsn
 }
 
-// get a connection with the inbuilt package
+// get a db connection with the inbuilt package
 func GetDbConn() (*sql.DB, error) {
 
 	dsn := DsnString()

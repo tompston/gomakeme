@@ -11,7 +11,7 @@
 package {{$lc}}_module
 
 import (
-	"{{$project_name}}/utils/response"
+	res "{{$project_name}}/utils/response"
 	"{{$project_name}}/utils/validate"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,5 +31,7 @@ func {{$controller_update}}(c *fiber.Ctx) error {
 	{{ db_conn_snippet }}
 	{{- end }}
 
-	return response.ResponseSuccess(c, data, response.UpdatedMessage(module_name))
+	// query goes here
+
+	return res.ResponseSuccess(c, data, res.UpdatedMessage(module_name))
 }

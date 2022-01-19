@@ -37,15 +37,15 @@ go run main.go
 
 ## Explanation
 
-It seems like one of the boring / repetitive parts of writing basic REST APIs is the boilerpate for the endpoints. 
+It seems like one of the boring / repetitive parts of writing basic REST APIs is the boilerpate for the endpoints.
 
 Want to add a new table to the database and create endpoints for it? Before starting to do so, you need to write the new routes and controllers that deal with the common CRUD opetations.
 
-Want to add another table? Repat the same process again, but change only the name to the new table. 
+Want to add another table? Repat the same process again, but change only the name to the new table.
 
 So this stuff is boring and manual. That's why you can automate it.
 
-----
+---
 
 Currently there are two options for the project that you could generate:
 
@@ -95,6 +95,14 @@ GOOS=windows go build -o ./bin/gomakeme_win
 
 -- publishing
 https://go.dev/doc/modules/publishing
+
+go mod tidy
+git add .
+git commit -m "changes for v0.0.3 - shortened the response package import name in the controllers to be more elegant + added comment that indicates where the ORM / SQL queries go"
+git tag v0.0.3
+git push origin v0.0.3
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.3
+
 
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.2
 -->
