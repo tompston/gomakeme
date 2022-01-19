@@ -150,3 +150,5 @@ func ValidatePayload() string {
 		return res.ResponseError(c, nil, err.Error())
 	}`
 }
+
+//
