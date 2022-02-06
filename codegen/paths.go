@@ -25,14 +25,6 @@ var init_project_templates = [...]string{
 	"router/router.go.tpl",
 }
 
-// var module_files = [...]string{
-// 	"templates/init_module/router.go.tpl",
-// 	"templates/init_module/get.go.tpl",
-// 	"templates/init_module/delete.go.tpl",
-// 	"templates/init_module/post.go.tpl",
-// 	"templates/init_module/put.go.tpl",
-// }
-
 var module_files = [...]string{
 	"templates/init_module/router.go.tmpl",
 	"templates/init_module/get.go.tmpl",

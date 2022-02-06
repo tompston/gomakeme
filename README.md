@@ -3,11 +3,12 @@
 Generate boilerplate + endpoints for Fiber REST APIs.
 
 #### Table of contents
-* [Install](#install)
-* [Generate the REST API](#generate-the-rest-api)
-* [Explanation](#explanation)
-* [Config file](#config-file)
-* [Notes](#notes)
+
+- [Install](#install)
+- [Generate the REST API](#generate-the-rest-api)
+- [Explanation](#explanation)
+- [Config file](#config-file)
+- [Notes](#notes)
 
 ## Install
 
@@ -35,6 +36,10 @@ go run main.go
 # + change the .env vars
 ```
 
+<h3 align="center">
+    Once generated, only the "router/project_modules.go" file will be updated on the next gomakeme runs. All of the other files won't be touched
+</h3>
+
 ## Explanation
 
 It seems like one of the boring / repetitive parts of writing basic REST APIs is the boilerpate for the endpoints.
@@ -43,22 +48,18 @@ Want to add a new table to the database and create endpoints for it? Before star
 
 Want to add another table? Repat the same process again, but change only the name to the new table.
 
-So this stuff is boring and manual. That's why you can automate it.
-
-<h3 align="center">
-    Once generated, only the "router/project_modules.go" file will be updated on the next `gomakeme` runs. All of the other files won't be touched.
-</h3>
+So this stuff is boring and repetative. That's why you can automate it.
 
 ## Config file
 
 **Commented out lines + modules lines are optional**  
- **All of the other lines are mandatory!**
+**All of the other lines are mandatory!**
 
 Currently there are three main options for the project that you could generate:
 
 1. Minimal server with no endpoints
 2. Server that uses modules
-3. Server that uses modules + sqlc as an ORM
+3. Server that uses modules + additional boilerplate for SQLC
 
 _\* examples of all three options can be found inside examples dir_
 
@@ -79,13 +80,21 @@ If true, then sqlc config files and sql files for modules will also be generated
 - table with the name of the module + 3 frequently used columns (id, created_at, updated_at)
 - 5 CRUD queries with placeholder values
 
+Additionaly a functions.sql file will be created that will hold a function that will be triggered once the db row is updated.
+
+No migration tools included, SQLC documentation lists some possible [options](https://docs.sqlc.dev/en/latest/howto/ddl.html?highlight=migr#handling-sql-migrations) that could be used, so check them out and pick one that you like the most.
+
 #### include_db_snippet: true
 
 If true, includes a snippet inside the controllers that can create a connection to the database
 
+#### Adding new modules
+
+On each run the program checks if the module specified in the config file exists in the `project_name/modules/` dir. If a new module is added in the modules array, it will be added to the generated server.
+
 ### Module
 
-A single module will hold 5 basic CRUD endpoints, that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated with it. The controllers can also hold common functions, such as
+A single module will hold 5 basic CRUD endpoints that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated with it. The controllers can also hold common functions, such as
 
 - validation of url params, if there are any
 - validation and custom error messages for the sent payloads
@@ -93,13 +102,11 @@ A single module will hold 5 basic CRUD endpoints, that will be automatically ava
 
 Once the directory for the `user_module` is created, it won't be updated if you run the `gomakeme` again, so you can edit them.
 
-<a name="Notes"/>
-
 ## Notes
 
 - Why Fiber? Because it's one of the [fastest](https://www.techempower.com/benchmarks/) Go frameworks currently + takes inspiration from Express
-- Taking a bit of inspiration from Nest.js, we bundle all of the logic of a single module ( router + controllers ) into one package.
-- There are probably bugs
+- Taking a bit of inspiration from Nest.js, we bundle router + controllers into one package.
+- There are probably bugs. Somewhere
 
 <!--
 
