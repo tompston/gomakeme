@@ -122,12 +122,14 @@ GOOS=windows go build -o ./bin/gomakeme_win
 -- publishing
 https://go.dev/doc/modules/publishing
 
+current version = v0.0.5
+
 go mod tidy
 git add .
-git commit -m "changes for v0.0.3 - shortened the response package import name in the controllers to be more elegant + added comment that indicates where the ORM / SQL queries go"
-git tag v0.0.3
-git push origin v0.0.3
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.3
+git commit -m "Added optional SQLC support + minor fixes"
+git tag v0.0.5
+git push origin v0.0.5
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.5
 
 
 -- testing script
