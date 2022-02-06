@@ -2,7 +2,7 @@
 
 Generate boilerplate + endpoints for Fiber REST APIs.
 
-### Table of contents
+#### Table of contents
 * [Install](#install)
 * [Generate the REST API](#generate-the-rest-api)
 * [Explanation](#explanation)
