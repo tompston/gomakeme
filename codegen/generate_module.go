@@ -20,21 +20,24 @@ func GenerateModuleDir(g Project) {
 // the value of the array to the Project struct that is defined in the current package.
 func GenerateModuleFile(g Project, template_path string) {
 
-	p_name := g.ProjectInfo.ProjectName
-	m_name := g.Module.ModuleName
-	o_path := ModuleDir(p_name, m_name)
+	project_name := g.ProjectInfo.ProjectName
+	module_name := g.Module.ModuleName
+	output_path := ModuleDir(project_name, module_name)
 	template_name, output_file := GenerateTemplateNameAndOutput(template_path, false)
 
-	full_output_path := fmt.Sprintf("%s%s", o_path, output_file)
+	full_output_path := fmt.Sprintf("%s%s", output_path, output_file)
+
+	// fmt.Println("template_name  --> ", template_name)
+
 	ExecuteTemplate(template_name, template_path, temp_funcs, full_output_path, g)
 }
 
 // Generate a new module, if the folder for it does not exist already
-func GenerateNewModule(g Project, template_path string) {
+func GenerateNewModule(g Project) {
 
-	p_name := g.ProjectInfo.ProjectName
-	m_name := g.Module.ModuleName
-	m_path := ModuleDir(p_name, m_name)
+	project_name := g.ProjectInfo.ProjectName
+	module_name := g.Module.ModuleName
+	m_path := ModuleDir(project_name, module_name)
 	m_path_relative := fmt.Sprintf("./%s", m_path)
 
 	// if the module mentioned in the config does not exist or debug_mode is true, create it
@@ -48,7 +51,7 @@ func GenerateNewModule(g Project, template_path string) {
 			GenerateModuleFile(g, module_files[i])
 		}
 
-		fmt.Println("* Created module", m_name)
+		fmt.Println("Created  module", module_name)
 	}
 }
 
@@ -60,18 +63,22 @@ func GenerateModulesFromConfig(conf *input.Project) {
 
 	// if the Modules array is not empty, generate them
 	if len(conf.Modules) != 0 {
-		// fmt.Println("Generating Modules!")
 		for i := 0; i < len(conf.Modules); i++ {
-
-			yaml_data := Project{
-				ProjectInfo:   ProjectInfo(conf.ProjectInfo),
-				ProjectConfig: ProjectConfig(conf.ProjectConfig),
-				Module: Module{
-					ModuleName: conf.Modules[i]},
-			}
-
-			GenerateNewModule(yaml_data, "codegen/templates/init_module/module_controller.go.tpl")
-			// GenerateNewModule(yaml_data, "templates/init_module/module_controller.go.tpl")
+			yaml_data := ConvertInputStructToCodegenStruct(conf, conf.Modules[i])
+			GenerateNewModule(yaml_data)
 		}
 	}
+}
+
+// Convert the input.Project struct to codegen.Project struct so that
+// you have access to one module_name at a time
+func ConvertInputStructToCodegenStruct(conf *input.Project, module_name string) Project {
+
+	data := Project{
+		ProjectInfo:   ProjectInfo(conf.ProjectInfo),
+		ProjectConfig: ProjectConfig(conf.ProjectConfig),
+		Module: Module{
+			ModuleName: module_name},
+	}
+	return data
 }

@@ -6,7 +6,7 @@ package router
 
 import (
 	{{if .Modules -}}
-	{{range $x := .Modules}}"{{$project_name}}/modules/{{convertToLowercase $x}}_module"
+	{{range $x := .Modules}}"{{$project_name}}/modules/{{ConvertToLowercase $x}}_module"
 	{{end}}{{end}}
 	"github.com/gofiber/fiber/v2"
 )
@@ -19,6 +19,6 @@ func ProjectModules(app *fiber.App) {
 	api := app.Group("/api")
 
 	// pass down the app + the api prefix
-	{{range $x := .Modules}}{{convertToLowercase $x}}_module.Routes(app, api)
+	{{range $x := .Modules}}{{ConvertToLowercase $x}}_module.Routes(app, api)
 	{{end}}{{end}}
 }

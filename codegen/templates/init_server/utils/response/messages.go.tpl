@@ -3,9 +3,9 @@ package response
 import "fmt"
 
 // Predefined messages for possible situations
-var ParamIsNotIntMessage = "Only integers as URL params!"
-var PageQueryIsNotIntMessage = "Page query param must be a number!"
-var FailedDbConnMessage = "Could not connect to the database!"
+const ParamIsNotIntMessage = "Only integers as URL params!"
+const PageQueryIsNotIntMessage = "Page query param must be a number!"
+const FailedDbConnMessage = "Could not connect to the database!"
 
 // functions that generate the appropriate message for the module.
 func FoundOneMessage(module_name string) string {

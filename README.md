@@ -1,12 +1,15 @@
-# **gomakeme**
+# gomakeme
 
-## Generate boilerplate + endpoints for Fiber REST APIs.
+Generate boilerplate + endpoints for Fiber REST APIs.
 
-> Never spend 6 minutes doing something by hand when you can spend 1 week to automate it
+### Table of contents
+* [Install](#install)
+* [Generate the REST API](#generate-the-rest-api)
+* [Explanation](#explanation)
+* [Config file](#config-file)
+* [Notes](#notes)
 
 ## Install
-
-- Go
 
 ```bash
 # go version >= 1.17
@@ -14,11 +17,8 @@ go install github.com/tompston/gomakeme@latest
 
 # go version < 1.17
 go get github.com/tompston/gomakeme
-```
 
-- Or clone
-
-```bash
+# or clone the repo
 git clone https://github.com/tompston/gomakeme.git
 ```
 
@@ -45,13 +45,22 @@ Want to add another table? Repat the same process again, but change only the nam
 
 So this stuff is boring and manual. That's why you can automate it.
 
----
+<h3 align="center">
+    Once generated, only the "router/project_modules.go" file will be updated on the next `gomakeme` runs. All of the other files won't be touched.
+</h3>
 
-Currently there are two options for the project that you could generate:
+## Config file
 
-1. Minimal setup with no endpoints
+**Commented out lines + modules lines are optional**  
+ **All of the other lines are mandatory!**
 
-2. Minimal setup that use modules
+Currently there are three main options for the project that you could generate:
+
+1. Minimal server with no endpoints
+2. Server that uses modules
+3. Server that uses modules + sqlc as an ORM
+
+_\* examples of all three options can be found inside examples dir_
 
 The option you choose is based on the `gomakeme.yml` config file. If there are modules specified in the config file, they will be added to the project.
 
@@ -63,6 +72,17 @@ modules: [User, Task]
 
 The `user_module` will be created in the `modules` directory.
 
+#### sqlc: true
+
+If true, then sqlc config files and sql files for modules will also be generated inside `/db` dir. The sql files that would be used by sqlc would include
+
+- table with the name of the module + 3 frequently used columns (id, created_at, updated_at)
+- 5 CRUD queries with placeholder values
+
+#### include_db_snippet: true
+
+If true, includes a snippet inside the controllers that can create a connection to the database
+
 ### Module
 
 A single module will hold 5 basic CRUD endpoints, that will be automatically available to the server. The generated controllers are held in seperate files, where the name of the file indicates what type of http request is associated with it. The controllers can also hold common functions, such as
@@ -73,18 +93,17 @@ A single module will hold 5 basic CRUD endpoints, that will be automatically ava
 
 Once the directory for the `user_module` is created, it won't be updated if you run the `gomakeme` again, so you can edit them.
 
+<a name="Notes"/>
+
 ## Notes
 
 - Why Fiber? Because it's one of the [fastest](https://www.techempower.com/benchmarks/) Go frameworks currently + takes inspiration from Express
-- The project does not include any ORMs, as there are too many options to choose from.
 - Taking a bit of inspiration from Nest.js, we bundle all of the logic of a single module ( router + controllers ) into one package.
-- Only the `router/project_modules.go` file will be updated on the next `gomakeme` runs. All of the other files won't be touched
 - There are probably bugs
 
 <!--
 
 # wsl
-
 export PATH=$PATH:/usr/local/go/bin
 
 GOOS=linux go build -o main .
@@ -104,5 +123,12 @@ git push origin v0.0.3
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.3
 
 
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.2
+-- testing script
+go run main.go
+cd change_my_name
+go mod tidy
+go mod download
+code .
+go run main.go
+
 -->

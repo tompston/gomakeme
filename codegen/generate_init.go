@@ -48,18 +48,18 @@ func UpdateModuleImporter(g input.Project) {
 
 // create the empty init folders and then populate them with the templates that
 // you created inside the init_server dir.
-func GenerateInitProject(global_project_data input.Project) {
+func GenerateInitProject(g input.Project) {
 
-	project_name := global_project_data.ProjectInfo.ProjectName
+	project_name := g.ProjectInfo.ProjectName
 	project_path := fmt.Sprintf("./%s", project_name)
 
 	// if the provided project name dir already exists or debug_mode is true, do
 	// not update the init dirs.
 	if !PathExists(project_path) || debug_mode {
 		GenerateInitProjectDirs(project_name)
-		GenerateInitFileBatch(global_project_data)
-	} else {
-		fmt.Println("Project already exists!")
+		GenerateInitFileBatch(g)
 	}
-
+	// else {
+	// 	fmt.Println("Project already exists!")
+	// }
 }

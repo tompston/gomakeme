@@ -1,0 +1,53 @@
+Example config + commands
+
+---- 1 ----
+project_info:
+  go_version: 1.16
+  name: "server_with_no_modules"  # no spaces or / in the name
+  port: 5000
+  # include_db_snippet: true
+  # sqlc: true
+# modules: [User, Country]  # Title case + singular!
+
+go run main.go
+cd server_with_no_modules
+go mod tidy
+go mod download
+code .
+cd .. 
+
+
+
+---- 2 ---- 
+project_info:
+  go_version: 1.16
+  name: "server_with_modules"  # no spaces or / in the name
+  port: 5000
+  include_db_snippet: true
+  # sqlc: true
+modules: [User, Country]  # Title case + singular!
+
+go run main.go
+cd server_with_modules
+go mod tidy
+go mod download
+code .
+cd ..
+
+
+
+---- 3 ---- 
+project_info:
+  go_version: 1.16
+  name: "server_with_modules_and_sqlc"  # no spaces or / in the name
+  port: 5000
+  include_db_snippet: true
+  sqlc: true
+modules: [User, Country]  # Title case + singular!
+
+go run main.go
+cd server_with_modules_and_sqlc
+go mod tidy
+go mod download
+code .
+cd ..

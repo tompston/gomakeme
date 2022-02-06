@@ -6,14 +6,20 @@ import (
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	pluralize "github.com/gertd/go-pluralize"
 )
 
-func ConvertToLowecase(input string) string {
+func ConvertToLowercase(input string) string {
 	return strings.ToLower(input)
 }
 
-func ConvertToLowercasePlural(input string) string {
-	return fmt.Sprintf("%s%s", strings.ToLower(input), "s")
+func ConvertToPlural(input string) string {
+	return pluralize.NewClient().Plural(input)
+}
+
+func ConvertToTitle(input string) string {
+	return strings.Title(input)
 }
 
 // if you pass a nested path of folders that do not exist, this function will also create those folders
@@ -45,7 +51,7 @@ func CreateModuleDir(module_name string) {
 // return the path to the "modules" folder
 // 		("my_project") --> "my_project/modules"
 func ProjectModuleDirPath(project_name string) string {
-	return fmt.Sprintf("%s/%s", ConvertToLowecase(project_name), ModuleOutputDir)
+	return fmt.Sprintf("%s/%s", ConvertToLowercase(project_name), ModuleOutputDir)
 }
 
 // return the full path to the folder that holds all of the files associated with the a single module of the project
@@ -65,56 +71,6 @@ func PathExists(path string) bool {
 	}
 
 	return true
-}
-
-// ------- Structs -------
-
-// Project struct will be passed to the templates and will hold all of the information about the project.
-// It consists of two parts currently - ProjectInfo and Module
-type Project struct {
-	ProjectInfo   ProjectInfo
-	Module        Module
-	ProjectConfig ProjectConfig
-}
-
-// struct that will hold all of the information about a single module that you want to create.
-// currently only the name is needed
-type Module struct {
-	ModuleName string
-}
-
-// ProjectName
-//  will be used in the go.mod, as the name of the folder in which your project will be
-// 	and as the first part of imports for other modules
-type ProjectInfo struct {
-	ProjectName      string
-	Port             string `yaml:"port"`
-	GoVersion        string `yaml:"go_version"`
-	IncludeDbSnippet string `yaml:"include_db_snippet"`
-}
-
-// struct that will be used in the .env template.
-type ProjectConfig struct {
-	// db variables
-	PostgresHost     string
-	PostgresUser     string
-	PostgresPassw    string
-	PostgresDb       string
-	PostgresPort     string
-	PostgresSSL      string
-	PostgresTimezone string
-	PostgresData     string
-}
-
-// ------- Template functions -------
-
-// functions that will be passed to the templates.
-var temp_funcs = template.FuncMap{
-	"convertToTitle":     strings.Title,
-	"convertToLowercase": strings.ToLower,
-	"db_conn_snippet":    DbConnSnippet,
-	"validate_url_param": ValidateUrlParam,
-	"validate_payload":   ValidatePayload,
 }
 
 // --- Funcs that return the code snippet that can be used in the template
@@ -151,4 +107,20 @@ func ValidatePayload() string {
 	}`
 }
 
-//
+// ------- Template functions -------
+
+// functions that will be passed to the templates
+var temp_funcs = template.FuncMap{
+
+	// -- funcs that convert input
+	// note that the key string should be the same as the name
+	// of the function to keep things simple and shared
+	"ConvertToTitle":     ConvertToTitle,
+	"ConvertToLowercase": ConvertToLowercase,
+	"ConvertToPlural":    ConvertToPlural,
+
+	// -- funcs that return a predefined string
+	"db_conn_snippet":    DbConnSnippet,
+	"validate_url_param": ValidateUrlParam,
+	"validate_payload":   ValidatePayload,
+}

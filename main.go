@@ -24,10 +24,12 @@ func main() {
 		codegen.GenerateInitProject(*conf)
 		// generate the modules specified in the .yml file
 		codegen.GenerateModulesFromConfig(conf)
+		// generate optional stuff
+		codegen.GenerateOptional(conf)
 		// keep the modules specified in the yaml file in sync with the modules that are imported to the router
 		codegen.UpdateModuleImporter(*conf)
 
 	} else {
-		fmt.Println(" ---ERROR---   Could not find gomakeme.yml")
+		fmt.Println("ERROR  Could not find gomakeme.yml")
 	}
 }

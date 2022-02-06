@@ -18,17 +18,35 @@ import (
 // -- module embeds
 //go:embed templates/init_module/*
 
+// -- optional embeds
+//go:embed templates/optional/*
+//go:embed templates/optional/*/*
+
 var templates embed.FS
 
+// var debug_mode = true
 var debug_mode = false
+
+// pass in a locally defined string + template functions and return it as a template
+// # template_variables, err := CreateLocalTemplate(module_variables, temp_funcs)
+func CreateLocalTemplate(input string, t_funcs template.FuncMap) (*template.Template, error) {
+
+	tpl, err := template.New("test").Funcs(t_funcs).Parse(input)
+
+	if err != nil {
+		return nil, err
+	}
+	return tpl, err
+}
 
 func ExecuteTemplate(t_name string, t_path string, t_funcs template.FuncMap, full_output_path string, data interface{}) {
 
-	// tmpl, err := template.New(t_name).Funcs(t_funcs).ParseFiles(t_path)
 	tmpl, err := template.New(t_name).Funcs(t_funcs).ParseFS(templates, t_path)
 
 	out, _ := os.Create(full_output_path)
+
 	defer out.Close()
+
 	if err != nil {
 		log.Fatalf("Could not parse struct template: %v\n", err)
 	}

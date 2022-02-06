@@ -11,8 +11,11 @@ type ProjectInfo struct {
 	Port             string `yaml:"port"`
 	GoVersion        string `yaml:"go_version"`
 	IncludeDbSnippet string `yaml:"include_db_snippet"`
+	SQLC             bool   `yaml:"sqlc"`
 }
 
+// pre-defined and changed in the .env file so that
+// there are no secrets stored in the gomakeme.yml file
 type ProjectConfig struct {
 	// database variables
 	PostgresHost     string

@@ -9,7 +9,10 @@ import (
 )
 
 // credits  to this --> https://dev.to/koddr/let-s-write-config-for-your-golang-web-app-on-right-way-yaml-5ggp
+
 // NewConfig returns a new decoded Config struct
+// if a boolean variable is not specified in the config,
+// then by default it will return false
 func NewConfig(configPath string) (*Project, error) {
 
 	// Create config structure
@@ -34,6 +37,9 @@ func NewConfig(configPath string) (*Project, error) {
 	if (ProjectConfig{} == config.ProjectConfig) {
 		config.ProjectConfig = placeholder_config
 	}
+
+	// fmt.Println("config.ProjectInfo.SQLC	-> ", config.ProjectInfo.SQLC)
+
 	return config, nil
 }
 
