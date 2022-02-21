@@ -124,10 +124,10 @@ https://go.dev/doc/modules/publishing
 
 go mod tidy
 git add .
-git commit -m "changes for v0.0.3 - shortened the response package import name in the controllers to be more elegant + added comment that indicates where the ORM / SQL queries go"
-git tag v0.0.3
-git push origin v0.0.3
-GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.3
+git commit -m "v0.0.6"
+git tag v0.0.6
+git push origin v0.0.6
+GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.6
 
 
 {{- if ( eq .ProjectInfo.Framework "fiber") }}
