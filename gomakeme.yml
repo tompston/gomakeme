@@ -3,6 +3,6 @@ project_info:
   name: "change_my_name"  # no spaces or / in the name
   port: 5003
   framework: "gin"        # either fiber / gin, don't leave empty
-  include_db_snippet: true
-  sqlc: true
+  # include_db_snippet: true
+  # sqlc: true
 modules: [User, Post, Comment]  # Title case + singular!
