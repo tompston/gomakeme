@@ -1,0 +1,57 @@
+{{ $project_name 			:= .ProjectInfo.ProjectName  -}}
+{{/* controller + sql variables */ -}}
+{{ $module_name                  := .Module.ModuleName -}}
+{{ $module_name_lwc			:= ConvertToLowercase .Module.ModuleName  -}}
+{{ $module_singular_title   := ConvertToTitle $module_name -}}
+{{ $module_singular_lwc     := ConvertToLowercase $module_name -}}
+{{ $module_plural           := ConvertToPlural $module_name -}}
+{{ $module_plural_title     := ConvertToTitle $module_name -}}
+{{ $module_plural_lwc	    := ConvertToLowercase $module_plural -}}
+{{ $controller_get_all  	:= printf "%s%s" "Get" $module_plural -}}
+{{ $controller_get_single  	:= printf "%s%s" "Get" $module_name -}}
+{{ $controller_create  		:= printf "%s%s" "Create" $module_name -}}
+{{ $controller_update  		:= printf "%s%s" "Update" $module_name -}}
+{{ $controller_delete  		:= printf "%s%s" "Delete" $module_name -}}
+{{ $table                   := $module_plural_lwc -}}
+{{/* snippets  */ -}}
+{{ $include_db_conn 		:= printf "%s" .ProjectInfo.IncludeDbSnippet -}}
+{{ $table_id 		:= printf "%s_id" $module_singular_lwc  -}}
+
+CREATE TABLE IF NOT EXISTS {{ $table }} (
+  -- init
+  {{ $table_id }} BIGSERIAL         PRIMARY KEY,
+  created_at      TIMESTAMP         NOT NULL DEFAULT NOW(),
+  updated_at      TIMESTAMP         NOT NULL DEFAULT NOW()
+
+  -- new columns below
+
+);
+
+-- when the row is updated, update the "updated_at" timestamp
+CREATE TRIGGER set_timestamp BEFORE UPDATE ON {{ $table }}
+FOR EACH ROW EXECUTE PROCEDURE trigger_set_timestamp();
+
+
+-- name: {{ $controller_get_single }} :one
+SELECT      *
+FROM        {{ $table }}
+WHERE       {{ $table_id }} = $1 LIMIT 1;
+
+-- name: {{ $controller_get_all }} :many
+SELECT      *
+FROM        {{ $table }};
+
+-- name: {{ $controller_create }} :one
+INSERT INTO {{ $table }} ( column_name ) 
+VALUES      ( $1 )
+RETURNING   *;
+
+-- name: {{ $controller_delete }} :exec
+DELETE FROM {{ $table }}
+WHERE       {{ $table_id }} = $1;
+
+-- name: {{ $controller_update }} :one
+UPDATE      {{ $table }}
+SET         column_name = $1
+WHERE       column_name = $2
+RETURNING   *;

@@ -5,6 +5,12 @@ module {{$project_name}}
 
 go {{ $go_version }}
 
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
 require (
 	github.com/andybalholm/brotli v1.0.3 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -18,3 +24,17 @@ require (
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
 )
+{{- end }}
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+require (
+	github.com/gin-gonic/gin v1.7.7
+	github.com/joho/godotenv v1.3.0
+	github.com/lib/pq v1.10.2
+	gopkg.in/go-playground/validator.v9 v9.31.0
+)
+{{- end }}

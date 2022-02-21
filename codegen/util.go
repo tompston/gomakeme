@@ -75,38 +75,6 @@ func PathExists(path string) bool {
 
 // --- Funcs that return the code snippet that can be used in the template
 
-func DbConnSnippet() string {
-	return `
-	// get db connection
-	db, err := database.GetDbConn()
-	if err != nil {
-		return res.ResponseError(c, nil, err.Error())
-	}
-	defer db.Close()
-	_ = db`
-}
-
-func ValidateUrlParam() string {
-	return `
-
-	// validate url param
-	id, err := strconv.Atoi(c.Params("id"))
-	if err != nil {
-		return res.ResponseError(c, nil, res.ParamIsNotIntMessage)
-	}
-	_ = id`
-}
-
-func ValidatePayload() string {
-	return `
-
-	// validate the sent json object
-	payload := new(ExampleStruct) // define which struct you want to get
-	if err := validate.ValidatePayload(c, payload); err != nil {
-		return res.ResponseError(c, nil, err.Error())
-	}`
-}
-
 // ------- Template functions -------
 
 // functions that will be passed to the templates
@@ -118,9 +86,27 @@ var temp_funcs = template.FuncMap{
 	"ConvertToTitle":     ConvertToTitle,
 	"ConvertToLowercase": ConvertToLowercase,
 	"ConvertToPlural":    ConvertToPlural,
-
-	// -- funcs that return a predefined string
-	"db_conn_snippet":    DbConnSnippet,
-	"validate_url_param": ValidateUrlParam,
-	"validate_payload":   ValidatePayload,
+	//
+	"DbConnForFiber":           DbConnForFiber,
+	"ValidateUrlParamForFiber": ValidateUrlParamForFiber,
+	"ValidatePayloadForFiber":  ValidatePayloadForFiber,
+	//
+	"DbConnForGin":           DbConnForGin,
+	"ValidateUrlParamForGin": ValidateUrlParamForGin,
+	"ValidatePayloadForGin":  ValidatePayloadForGin,
 }
+
+/*
+"github.com/gin-gonic/gin"
+
+c *gin.Context
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
+// Content
+{{- end }}
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+// Content
+{{- end }}
+
+*/

@@ -1,6 +1,6 @@
 # gomakeme
 
-Generate boilerplate + endpoints for Fiber REST APIs.
+Generate boilerplate + endpoints for Fiber or Gin REST APIs.
 
 #### Table of contents
 
@@ -32,6 +32,7 @@ git clone https://github.com/tompston/gomakeme.git
 ```bash
 go mod tidy
 go mod download
+gofmt -s -w .
 go run main.go
 # + change the .env vars
 ```
@@ -61,7 +62,7 @@ Currently there are three main options for the project that you could generate:
 2. Server that uses modules
 3. Server that uses modules + additional boilerplate for SQLC
 
-_\* examples of all three options can be found inside examples dir_
+_\* examples of all options can be found inside examples dir_
 
 The option you choose is based on the `gomakeme.yml` config file. If there are modules specified in the config file, they will be added to the project.
 
@@ -104,7 +105,6 @@ Once the directory for the `user_module` is created, it won't be updated if you 
 
 ## Notes
 
-- Why Fiber? Because it's one of the [fastest](https://www.techempower.com/benchmarks/) Go frameworks currently + takes inspiration from Express
 - Taking a bit of inspiration from Nest.js, we bundle router + controllers into one package.
 - There are probably bugs. Somewhere
 
@@ -130,12 +130,18 @@ git push origin v0.0.3
 GOPROXY=proxy.golang.org go list -m github.com/tompston/gomakeme@v0.0.3
 
 
--- testing script
-go run main.go
-cd change_my_name
-go mod tidy
-go mod download
-code .
-go run main.go
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
+// Content
+{{- end }}
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+// Content
+{{- end }}
+
+
+- Breaking Changes from 0.0.4 -> 0.0.5 !
+- Now has support for 2 go frameworks -> Gin and Fiber
+- refactored predefined responses to be a single function 
+- Removed functions that return API messages
 
 -->

@@ -1,4 +1,4 @@
-{{ $gofiber_port := .ProjectInfo.Port -}}
+{{ $GOLANG_PORT := .ProjectInfo.Port -}}
 # gomakeme
 
 ```bash
@@ -6,7 +6,7 @@
 docker build -t gofiber .
 
 # run and publish with the name of gofiber
-docker run --publish {{$gofiber_port}}:{{$gofiber_port}} --name gofiber gofiber
+docker run --publish {{$GOLANG_PORT}}:{{$GOLANG_PORT}} --name gofiber gofiber
 
 # stop
 docker stop gofiber

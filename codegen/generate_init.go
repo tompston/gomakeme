@@ -59,7 +59,4 @@ func GenerateInitProject(g input.Project) {
 		GenerateInitProjectDirs(project_name)
 		GenerateInitFileBatch(g)
 	}
-	// else {
-	// 	fmt.Println("Project already exists!")
-	// }
 }

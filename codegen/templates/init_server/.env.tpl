@@ -21,9 +21,9 @@ TZ={{$pg_tz}}
 PGDATA={{$pg_data}}
 
 # --- GOLANG VARIABLES
-GOFIBER_PORT={{$port}}
+GOLANG_PORT={{$port}}
 # Used in main.go as the port + in docker-compose
 BASE_URL=http://localhost:{{$port}}
-# Used when you want to link to other pages of the API (like pagitation). Needs to match the GOFIBER_PORT.
+# Used when you want to link to other pages of the API (like pagitation). Needs to match the GOLANG_PORT.
 FRONTEND_URL=http://localhost:3000
 # Variable that can be used in main.go for CORS, so that you could make api requests from the frontend, when running locally.

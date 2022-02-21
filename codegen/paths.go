@@ -35,19 +35,19 @@ var module_files = [...]string{
 
 var sqlc_templates = []Template{
 	{
-		template_path: "templates/optional/sqlc/sqlc.yaml.tpl",
+		template_path: "templates/optional/sqlc/sqlc.yaml.tmpl",
 		output_dir:    "/db/",
 	},
 	{
-		template_path: "templates/optional/sqlc/README.txt.tpl",
+		template_path: "templates/optional/sqlc/README.txt.tmpl",
 		output_dir:    "/db/",
 	},
 	{
-		template_path: "templates/optional/sqlc/functions.sql.tpl",
+		template_path: "templates/optional/sqlc/functions.sql.tmpl",
 		output_dir:    "/db/sql/",
 	},
 	{
-		template_path: "templates/optional/sqlc/__module_name__.sql.tpl",
+		template_path: "templates/optional/sqlc/__module_name__.sql.tmpl",
 		output_dir:    "/db/sql/",
 	},
 }

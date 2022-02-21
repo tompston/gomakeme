@@ -13,13 +13,18 @@
 {{ $controller_update  		:= printf "%s%s" "Update" $module_name -}}
 {{ $controller_delete  		:= printf "%s%s" "Delete" $module_name -}}
 {{ $table                   := $module_plural_lwc -}}
+{{/* Messages */ -}}
+{{ $msg_found_one   		:= printf "Found %s!" $module_name -}}
+{{ $msg_found_many   		:= printf "Found %s!" $module_plural -}}
+{{ $msg_created   			:= printf "Created %s!" $module_name  -}}
+{{ $msg_deleted   			:= printf "Deleted %s!" $module_name -}}
+{{ $msg_updated   			:= printf "Updated %s!" $module_name  -}}
 {{/* snippets  */ -}}
 {{ $include_db_conn 		:= printf "%s" .ProjectInfo.IncludeDbSnippet -}}
 
-
 package {{$module_name_lwc}}_module
 
-
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
 import (
 	res "{{$project_name}}/utils/response"
 
@@ -32,13 +37,43 @@ import (
 
 func {{$controller_delete}}(c *fiber.Ctx) error {
 
-	{{- validate_url_param}}
+	{{- ValidateUrlParamForFiber }}
 
 	{{- if ( eq $include_db_conn "true") }}
-	{{ db_conn_snippet }}
+	{{ DbConnForFiber }}
 	{{- end }}
 
 	// query goes here
 
-	return res.ResponseSuccess(c, data, res.DeletedMessage(module_name))
+	return res.Response(c, 200 , data, "{{ $msg_deleted }}" )
 }
+{{- end }}
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+import (
+	res "{{$project_name}}/utils/response"
+
+	"github.com/gin-gonic/gin"
+	"strconv" 
+	{{- if ( eq $include_db_conn "true") }}
+	"{{$project_name}}/settings/database"
+	{{- end }}
+)
+
+func {{$controller_delete}}(c *gin.Context) {
+
+	{{- ValidateUrlParamForGin }}
+
+	{{- if ( eq $include_db_conn "true") }}
+	{{ DbConnForGin }}
+	{{- end }}
+
+	// query goes here
+
+	res.Response(c, 200, data, "{{ $msg_deleted }}")
+}
+{{- end }}

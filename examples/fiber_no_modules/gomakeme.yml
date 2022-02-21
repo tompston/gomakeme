@@ -1,0 +1,8 @@
+project_info:
+  go_version: 1.17
+  name: "my_server"    # no spaces or / in the name
+  port: 4444                #
+  framework: "fiber"        # either fiber / gin
+  # include_db_snippet: true  
+  # sqlc: true
+# modules: [User, Country]    # Title case + singular!

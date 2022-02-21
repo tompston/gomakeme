@@ -1,46 +1,56 @@
 package response
 
+
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
 import (
 	"github.com/gofiber/fiber/v2"
+	"fmt"
 )
 
-// idea / code taken from here https://github.com/fachryansyah/fotongo/blob/master/utils/response.go
-
-func ResponseSuccess(c *fiber.Ctx, data interface{}, message string) error {
-	return c.Status(200).JSON(fiber.Map{
-		"status":  200,
+// all of the correct status codes can be found here
+// https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
+func Response(c *fiber.Ctx, status int,data interface{}, message string) error {
+	return c.Status(status).JSON(fiber.Map{
+		"status":  status,
 		"message": message,
 		"data":    data,
 	})
 }
+{{- end }}
 
-func ResponseNotFound(c *fiber.Ctx, data interface{}, message string) error {
-	return c.Status(404).JSON(fiber.Map{
-		"status":  404,
-		"message": message,
-	})
-}
 
-func ResponseError(c *fiber.Ctx, data interface{}, message string) error {
-	return c.Status(500).JSON(fiber.Map{
-		"status":  500,
-		"message": message,
-		"data":    data,
-	})
-}
 
-func ResponseUnauthenticated(c *fiber.Ctx, data interface{}, message string) error {
-	return c.Status(403).JSON(fiber.Map{
-		"status":  403,
+
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+import (
+	"github.com/gin-gonic/gin"
+	"fmt"
+)
+
+// all of the correct status codes can be found here
+// https://pkg.go.dev/net/http?utm_source=gopls#StatusOK
+func Response(c *gin.Context, status int, data interface{}, message string) {
+	c.JSON(status, gin.H{
+		"status":  status,
 		"message": message,
 		"data":    data,
 	})
 }
+{{- end }}
 
-func ResponseValidationError(c *fiber.Ctx, data interface{}, message string) error {
-	return c.Status(304).JSON(fiber.Map{
-		"status":  304,
-		"message": message,
-		"data":    data,
-	})
+
+
+
+const debug = true
+
+// return the acutual error message during debug only
+func DbConnErrorMessage(err_msg string) string {
+
+	if debug {
+		return fmt.Sprintln("Could not connect to the database: ", err_msg)
+	}
+
+	return fmt.Sprintln("Could not connect to the database!")
 }

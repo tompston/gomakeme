@@ -1,7 +1,8 @@
 project_info:
-  go_version: 1.16
+  go_version: 1.17
   name: "change_my_name"  # no spaces or / in the name
-  port: 5000
-  # include_db_snippet: true
-  # sqlc: true
-modules: [User, Country]  # Title case + singular!
+  port: 5003
+  framework: "gin"        # either fiber / gin, don't leave empty
+  include_db_snippet: true
+  sqlc: true
+modules: [User, Post, Comment]  # Title case + singular!

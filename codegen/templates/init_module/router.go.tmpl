@@ -13,11 +13,22 @@
 {{ $controller_update  		:= printf "%s%s" "Update" $module_name -}}
 {{ $controller_delete  		:= printf "%s%s" "Delete" $module_name -}}
 {{ $table                   := $module_plural_lwc -}}
+{{/* Messages */ -}}
+{{ $msg_found_one   		:= printf "Found %s!" $module_name -}}
+{{ $msg_found_many   		:= printf "Found %s!" $module_plural -}}
+{{ $msg_created   			:= printf "Created %s!" $module_name  -}}
+{{ $msg_deleted   			:= printf "Deleted %s!" $module_name -}}
+{{ $msg_updated   			:= printf "Updated %s!" $module_name  -}}
 {{/* snippets  */ -}}
 {{ $include_db_conn 		:= printf "%s" .ProjectInfo.IncludeDbSnippet -}}
 
 package {{$module_name_lwc}}_module
 
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "fiber") }}
 import (
 	"fmt"
 	"{{$project_name}}/settings"
@@ -30,17 +41,44 @@ var BASE = fmt.Sprintf(settings.Config("BASE_URL") + "/api" + "/{{$module_name_l
 
 func Routes(app *fiber.App, api fiber.Router){
 
-	// Get All 
 	api.Get("/{{$module_name_lwc}}", {{$controller_get_all}}) 
-	// Get By Id
 	api.Get("/{{$module_name_lwc}}/:id", {{$controller_get_single}}) 
-	// Create
 	api.Post("/{{$module_name_lwc}}", {{$controller_create}}) 
-	// Update With Id
 	api.Put("/{{$module_name_lwc}}/:id", {{$controller_update}})
-	// Delete With Id
 	api.Delete("/{{$module_name_lwc}}/:id", {{$controller_delete}}) 
+
 }
+{{- end }}
+
+
+
+
+
+{{- if ( eq .ProjectInfo.Framework "gin") }}
+import (
+	"{{$project_name}}/settings"
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
+
+var data = ""
+var module_name = "{{$module_name}}"
+var BASE = fmt.Sprintf(settings.Config("BASE_URL") + "/api" + "/{{$module_name_lwc}}")
+
+func Routes(app *gin.RouterGroup) {
+
+	module := app.Group("{{$module_name_lwc}}")
+
+	{
+		module.GET("/", {{$controller_get_all}})
+		module.GET("/:id", {{$controller_get_single}})
+		module.POST("/", {{$controller_create}})
+		module.PUT("/", {{$controller_update}})
+		module.DELETE("/", {{$controller_delete}})
+	}
+}
+{{- end }}
+
 
 type ExampleStruct struct {
 	ExampleId    int    `json:"example_id" validate:"required,min=1,max=20"`

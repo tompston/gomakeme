@@ -10,6 +10,7 @@ type ProjectInfo struct {
 	ProjectName      string `yaml:"name"`
 	Port             string `yaml:"port"`
 	GoVersion        string `yaml:"go_version"`
+	Framework        string `yaml:"framework"`
 	IncludeDbSnippet string `yaml:"include_db_snippet"`
 	SQLC             bool   `yaml:"sqlc"`
 }
